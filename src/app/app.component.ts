@@ -1,5 +1,12 @@
 import {Component} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+
+
+export interface Client {
+  firstName: string;
+  lastName: string;
+  macAddress: string;
+  flightNumber: string;
+}
 
 @Component({
   selector: 'app-root',

@@ -42,7 +42,7 @@ p {
 }
 
 .content {
-  display: flex;
+  display:flex;
   margin: 82px auto 32px;
   padding: 0 16px;
   max-width: 960px;
@@ -178,10 +178,10 @@ footer a {
 }
 
 .vertical-line {
+  position: absolute;
+  right: 50%;
+  top : 10%;
   border-left: 2px solid #000;
-  display: inline-block;
   height: 800px;
-  margin: auto;
+  width: 10px;
 }
-
-

@@ -1,0 +1,58 @@
+.displayClient {
+  position: absolute;
+  right:50px;
+  width: 40%;
+  padding: 10px 20px;
+  background: lightskyblue;
+  border-radius: 8px;
+}
+
+li {
+  margin-top:5%;
+  border-radius: 3px;
+  padding: 25px 30px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.table-header {
+  background-color: lightgray;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.table-row {
+  background-color: #ffffff;
+  box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+}
+
+.col-1 {
+  flex-basis: 2%;
+}
+
+.col-2 {
+  flex-basis: 2%;
+}
+
+.col-3 {
+  flex-basis: 2%
+}
+
+.col-4 {
+  flex-basis: 2%;
+}
+
+.col-5 {
+  flex-basis: 2%;
+}
+
+.col-6 {
+  flex-basis: 2%;
+}
+
+.col {
+  border-radius: 10px;
+  text-align: center;
+}

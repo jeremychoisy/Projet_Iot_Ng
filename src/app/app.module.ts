@@ -5,7 +5,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppComponent} from './app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormClientComponent} from './form-client/form-client.component';
-import { DisplayClientComponent } from './display-client/display-client.component';
+import {DisplayClientComponent} from './display-client/display-client.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { DisplayClientComponent } from './display-client/display-client.componen
     BrowserModule,
     ReactiveFormsModule,
     NgbModule,
-    FormsModule
+    HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
