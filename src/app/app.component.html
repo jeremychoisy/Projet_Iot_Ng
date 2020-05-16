@@ -17,21 +17,21 @@
   <span>Bienvenue</span>
   <div class="card-container">
     <a class="cardToolBar card card-small " target="_blank" rel="noopener" href="">
-      <span>Aéoroport</span>
+      <span>Aéroport</span>
     </a>
     <a class="cardToolBar card card-small " target="_blank" rel="noopener" href="">
-      <span>Statisques</span>
+      <span>Statistiques</span>
     </a>
   </div>
 </div>
 
 <div class="content" role="main">
 
-  <app-form-client></app-form-client>
+  <app-form-client (refreshEmitter)="refreshTrigger$.next()"></app-form-client>
 
   <span class="vertical-line"></span>
 
-  <app-display-client></app-display-client>
+  <app-display-client [refreshTrigger$]="refreshTrigger$"></app-display-client>
 
   <!-- Footer -->
   <footer>

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {Client} from '../app.component';
+import {HttpRequestService} from '../services';
 
 @Component({
   selector: 'app-form-client',
@@ -9,23 +9,23 @@ import {Client} from '../app.component';
 })
 
 
-export class FormClientComponent implements OnInit {
+export class FormClientComponent {
 
-  client = new FormGroup({
+  @Output()
+  public refreshEmitter: EventEmitter<void> = new EventEmitter<void>();
+
+  public client = new FormGroup({
     firstName: new FormControl(),
     lastName: new FormControl(),
     macAddress: new FormControl(),
     flightNumber: new FormControl(),
   });
 
-  listClient: Client[] = [];
+  constructor(private httpRequestService: HttpRequestService) {}
 
   submitForm(){
-    this.listClient.push(this.client.value);
+    this.httpRequestService.addClient(this.client.value).subscribe(() => {
+      this.refreshEmitter.emit();
+    });
   }
-
-  ngOnInit(): void {
-  }
-
 }
-

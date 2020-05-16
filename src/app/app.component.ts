@@ -1,12 +1,5 @@
 import {Component} from '@angular/core';
-
-
-export interface Client {
-  firstName: string;
-  lastName: string;
-  macAddress: string;
-  flightNumber: string;
-}
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +8,5 @@ export interface Client {
 })
 
 export class AppComponent {
-  title = 'projet-iot-app';
-
+  public refreshTrigger$: Subject<void> = new Subject<void>();
 }

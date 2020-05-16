@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {Client} from '../app.component';
-import {DisplayClientService} from './display-client.service';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Client} from '../models/index';
+import {Observable, Subject, Subscription} from 'rxjs';
+import {HttpRequestService} from '../services/index';
 
 @Component({
   selector: 'app-display-client',
@@ -8,24 +9,30 @@ import {DisplayClientService} from './display-client.service';
   styleUrls: ['./display-client.component.css']
 })
 
-export class DisplayClientComponent implements OnInit {
+export class DisplayClientComponent implements OnInit, OnDestroy {
+  @Input()
+  public refreshTrigger$: Subject<void>;
 
-  clientList: Client[] = [];
+  public clientList$: Observable<Client[]>;
 
-  constructor(private displayClientService: DisplayClientService) {
+  private subscriptions: Subscription[] = [];
+  constructor(private displayClientService: HttpRequestService) {
   }
 
   ngOnInit(): void {
-    console.log('Oui Jeremy j\'ai mis un console.log je suis pas non plus comme les 3\/4 de la promo');
-    this.getAllClient();
-  }
-
-  getAllClient(): void {
-    this.displayClientService.getAllClient().subscribe(result => this.clientList = result);
+    this.clientList$ = this.displayClientService.getAllClient();
+    this.subscriptions.push(
+      this.refreshTrigger$.subscribe(() =>
+        this.clientList$ = this.displayClientService.getAllClient()
+      )
+    );
   }
 
   deleteClient(client: Client) {
-    this.displayClientService.deleteClient(client).subscribe();
-    console.log(client.macAddress + ' devrait être supprimer');
+    this.clientList$ = this.displayClientService.deleteClient(client);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

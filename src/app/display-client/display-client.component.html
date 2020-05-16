@@ -2,15 +2,15 @@
   <h2> Clients présents </h2>
   <ul>
     <li class="table-header">
-      <div class="col col-1">img</div>
+<!--      <div class="col col-1">img</div>-->
       <div class="col col-2">Nom</div>
       <div class="col col-3">Prénom</div>
       <div class="col col-4">Addresse mac</div>
       <div class="col col-5">Numéro de vol</div>
       <div class="col col-6">Retirer l'utilisateur</div>
     </li>
-    <li class="table-row" *ngFor="let client of clientList;">
-      <div class="col col-1"><img src="../../assets/account.png" alt="Account image"/></div>
+    <li class="table-row" *ngFor="let client of clientList$ | async;">
+<!--      <div class="col col-1"><img src="../../assets/account.png" alt="Account image"/></div>-->
       <div class="col col-2"><p>{{client.firstName}} </p></div>
       <div class="col col-3"><p>{{client.lastName}}</p></div>
       <div class="col col-4"><p>{{client.macAddress}}</p></div>
