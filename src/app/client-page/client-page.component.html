@@ -1,0 +1,5 @@
+<app-form-client (refreshEmitter)="refreshTrigger$.next()"></app-form-client>
+
+<span class="vertical-line"></span>
+
+<app-display-client [refreshTrigger$]="refreshTrigger$"></app-display-client>

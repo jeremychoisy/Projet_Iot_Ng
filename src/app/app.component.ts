@@ -8,5 +8,4 @@ import {Subject} from 'rxjs';
 })
 
 export class AppComponent {
-  public refreshTrigger$: Subject<void> = new Subject<void>();
 }
