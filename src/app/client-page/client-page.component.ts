@@ -8,10 +8,5 @@ import {Subject} from 'rxjs';
   styleUrls: ['./client-page.component.css']
 })
 export class ClientPageComponent {
-
   public refreshTrigger$: Subject<void> = new Subject<void>();
-
-  constructor() {
-  }
-
 }

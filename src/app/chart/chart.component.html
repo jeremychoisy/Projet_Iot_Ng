@@ -1,0 +1,10 @@
+<div class="chart-wrapper" *ngIf="chartData$ | async as chartData">
+  <canvas baseChart
+    [datasets]="chartData.barChartData"
+    [labels]="chartData.barChartLabels"
+    [options]="chartData.barChartOptions"
+    [plugins]="chartData.barChartPlugins"
+    [legend]="chartData.barChartLegend"
+    [chartType]="chartData.barChartType">
+  </canvas>
+</div>

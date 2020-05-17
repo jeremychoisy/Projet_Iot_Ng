@@ -16,8 +16,7 @@ export class DisplayClientComponent implements OnInit, OnDestroy {
   public clientList$: Observable<Client[]>;
 
   private subscriptions: Subscription[] = [];
-  constructor(private displayClientService: HttpRequestService) {
-  }
+  constructor(private displayClientService: HttpRequestService) {}
 
   ngOnInit(): void {
     this.clientList$ = this.displayClientService.getAllClient();

@@ -56,6 +56,9 @@ import '@angular/localize/init';
  *
  */
 
+// support Object.values and Object.keys for all browsers
+import 'core-js/es/object';
+
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
