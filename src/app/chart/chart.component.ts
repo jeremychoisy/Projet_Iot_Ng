@@ -14,6 +14,9 @@ export class ChartComponent implements OnInit {
 
   constructor(private httpRequestService: HttpRequestService) {}
 
+  /*
+  Création du graphique à l'aide de la zone et du nombre de passage reçu avec l'appel http
+   */
   ngOnInit(){
     this.chartData$ = this.httpRequestService.getStatistics().pipe(
       map((response) => {

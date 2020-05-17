@@ -1,8 +1,8 @@
 import {Component, AfterViewInit, ViewChild, ElementRef, OnInit, OnDestroy} from '@angular/core';
 import {Point} from '../models/map-forms';
 import LatLng = google.maps.LatLng;
-import {Observable, Subject, Subscription} from 'rxjs';
-import {Client} from '../models';
+import {Observable, Subscription} from 'rxjs';
+import {Client} from '../models/index';
 import {HttpRequestService} from '../services';
 
 @Component({
@@ -33,19 +33,30 @@ export class AirportMapComponent implements AfterViewInit, OnInit, OnDestroy {
   constructor(private displayClientService: HttpRequestService) {
   }
 
+  /*
+  Récupération des clients inscrits
+   */
   ngOnInit(): void {
     this.clientList$ = this.displayClientService.getAllClient();
   }
 
+  /*
+    Création de la google map ainsi que des zones
+   */
   ngAfterViewInit() {
     this.mapInitializer();
-    this.setActiveForm(3, 'Jhon Cena');
   }
 
+  /*
+    Suppresion des subscriptions à des éléments
+  */
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
+  /*
+      Initialisation de la map et des zones définis
+  */
   mapInitializer() {
     this.map = new google.maps.Map(this.gmap.nativeElement,
       this.mapOptions);
@@ -149,6 +160,9 @@ export class AirportMapComponent implements AfterViewInit, OnInit, OnDestroy {
     ]);
   }
 
+  /*
+     Construction de quatres points définis par une latitude et une longitude
+ */
   constructPointsForZone(listPosition: number[]) {
     const a = new Point(listPosition[0], listPosition[1]);
     const b = new Point(listPosition[2], listPosition[3]);
@@ -157,6 +171,9 @@ export class AirportMapComponent implements AfterViewInit, OnInit, OnDestroy {
     this.constructZone(a, b, c, d);
   }
 
+  /*
+     Construction des zones grâce aux quatre points
+ */
   constructZone(a: Point, b: Point, c: Point, d: Point) {
     const zone = [
       {lat: a.lat, lng: a.lng},
@@ -168,6 +185,9 @@ export class AirportMapComponent implements AfterViewInit, OnInit, OnDestroy {
     this.addZoneToMap(zone);
   }
 
+  /*
+    Ajout des zones personnalisées à la google map
+   */
   addZoneToMap(zone) {
     const zoneForm = new google.maps.Polygon({
       paths: zone,
@@ -182,6 +202,9 @@ export class AirportMapComponent implements AfterViewInit, OnInit, OnDestroy {
     zoneForm.setMap(this.map);
   }
 
+  /*
+  Ajout des noms de zones
+   */
   attachPolygonLabel(zone) {
 
     const infoWindow = new google.maps.InfoWindow();
@@ -191,28 +214,37 @@ export class AirportMapComponent implements AfterViewInit, OnInit, OnDestroy {
     infoWindow.open(this.map);
   }
 
+  /*
+  Méthode permettant d'indiquer quel zone est la dernière à avoir été fréquenter par un visiteur
+  @param zoneNumber: numéro de la zone
+  @param nom: nom du visiteur ayant été sélectionné
+   */
   setActiveForm(zoneNumber, nom: string) {
-
-    const activeZone = this.zones[zoneNumber];
 
     if (this.marker) {
       this.marker.setMap(null);
     }
+    if (zoneNumber > -1) {
+      const activeZone = this.zones[zoneNumber - 1];
 
-    this.marker = new google.maps.Marker({
-      position: new LatLng((activeZone[0].lat + activeZone[2].lat) / 2 - 0.00010, (activeZone[0].lng + activeZone[2].lng) / 2),
-      map: this.map,
-      animation: google.maps.Animation.DROP,
-      title: nom
-    });
+      this.marker = new google.maps.Marker({
+        position: new LatLng((activeZone[0].lat + activeZone[2].lat) / 2 - 0.00010, (activeZone[0].lng + activeZone[2].lng) / 2),
+        map: this.map,
+        animation: google.maps.Animation.DROP,
+        title: nom
+      });
+    }
   }
 
+  /*
+   Réception de la dernière position du client
+   */
   getClientActive(event): void {
     const client: Client = event.value;
     this.subscriptions.push(
       this.displayClientService.getClientPos(client).subscribe((numberZone) =>
-        this.setActiveForm(numberZone, client.firstName + client.lastName))
-    );
+        this.setActiveForm(numberZone, client.firstName + client.lastName)
+      ));
   }
 
 }

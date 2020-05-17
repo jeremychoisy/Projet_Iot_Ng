@@ -21,9 +21,13 @@ export class FormClientComponent {
     flightNumber: new FormControl(),
   });
 
-  constructor(private httpRequestService: HttpRequestService) {}
+  constructor(private httpRequestService: HttpRequestService) {
+  }
 
-  submitForm(){
+  /*
+  Ajout d'un nouveau voyageur
+   */
+  submitForm() {
     this.httpRequestService.addClient(this.client.value).subscribe(() => {
       this.refreshEmitter.emit();
     });
