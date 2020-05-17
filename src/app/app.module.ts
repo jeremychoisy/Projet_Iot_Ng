@@ -15,6 +15,8 @@ import {ChartsModule} from 'ng2-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatOptionModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
+import { PingDialogComponent } from './ping-dialog/ping-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import {MatSelectModule} from '@angular/material/select';
     FormClientComponent,
     DisplayClientComponent,
     AirportMapComponent,
-    ChartComponent
+    ChartComponent,
+    PingDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -35,10 +38,12 @@ import {MatSelectModule} from '@angular/material/select';
     ChartsModule,
     BrowserAnimationsModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [PingDialogComponent]
 })
 export class AppModule {
 }

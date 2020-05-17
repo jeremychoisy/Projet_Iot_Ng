@@ -8,7 +8,7 @@
       <div class="col col-img">Addresse mac</div>
       <div class="col col-button">Numéro de vol</div>
       <div class="col col-button">Retirer l'utilisateur</div>
-      <div class="colcol-button">Avertir l'utilisateur</div>
+      <div class="col col-button">Avertir l'utilisateur</div>
       <div class="col col-img">Statut</div>
     </li>
     <li class="table-row" *ngFor="let client of clientList$ | async;">
@@ -21,12 +21,17 @@
         <button class="btn btn-danger" (click)="deleteClient(client)">Retirer</button>
       </div>
       <div class="col col-button">
-        <button class="btn btn-info" (click)="pingClient(client)">Ping</button>
+        <button class="btn btn-info" (click)="openDialog(client)">Ping</button>
       </div>
-      <div class="col col-img">
-        <img src="../../assets/{{client.pingStatus}}.png"/>
+      <div class="col col-img" *ngIf="pingStatus[client._id];else DefaultIcon">
+        <img src="../../assets/{{pingStatus[client._id] | async}}.png" alt="ping status"/>
       </div>
     </li>
   </ul>
 </div>
+<ng-template #DefaultIcon>
+  <div class="col col-img">
+    <img src="../../assets/ping.png" alt="ping status"/>
+  </div>
+</ng-template>
 

@@ -3,7 +3,7 @@ import {Point} from '../models/map-forms';
 import LatLng = google.maps.LatLng;
 import {Observable, Subscription} from 'rxjs';
 import {Client} from '../models/index';
-import {HttpRequestService} from '../services';
+import {HttpRequestService} from '../services/index';
 
 @Component({
   selector: 'app-airport-map',
@@ -30,14 +30,14 @@ export class AirportMapComponent implements AfterViewInit, OnInit, OnDestroy {
 
   public clientList$: Observable<Client[]>;
 
-  constructor(private displayClientService: HttpRequestService) {
+  constructor(private httpRequestService: HttpRequestService) {
   }
 
   /*
   Récupération des clients inscrits
    */
   ngOnInit(): void {
-    this.clientList$ = this.displayClientService.getAllClient();
+    this.clientList$ = this.httpRequestService.getAllClient();
   }
 
   /*
@@ -60,104 +60,18 @@ export class AirportMapComponent implements AfterViewInit, OnInit, OnDestroy {
   mapInitializer() {
     this.map = new google.maps.Map(this.gmap.nativeElement,
       this.mapOptions);
-    // ZONE 1
-    this.constructPointsForZone([
-      43.665289, 7.211399,
-      43.664977, 7.211461,
-      43.665097, 7.212199,
-      43.665413, 7.212083
-    ]);
-    // ZONE 2
-    this.constructPointsForZone([
-      43.664977, 7.211461,
-      43.664674, 7.211542,
-      43.664767, 7.212309,
-      43.665097, 7.212199
-    ]);
-    // ZONE 3
-    this.constructPointsForZone([
-      43.665413, 7.212083,
-      43.665097, 7.212199,
-      43.665193, 7.212757,
-      43.665433, 7.212714
-    ]);
-    // ZONE 4
-    this.constructPointsForZone([
-      43.665097, 7.212199,
-      43.664767, 7.212309,
-      43.664823, 7.212869,
-      43.665193, 7.212757
-    ]);
-    // ZONE 5
-    this.constructPointsForZone([
-      43.665433, 7.212714,
-      43.665011, 7.212818,
-      43.665083, 7.213336,
-      43.665525, 7.213180
-    ]);
-    // ZONE 6
-    this.constructPointsForZone([
-      43.665011, 7.212818,
-      43.664753, 7.212892,
-      43.664828, 7.213415,
-      43.665083, 7.213336
-    ]);
-    // ZONE 7
-    this.constructPointsForZone([
-      43.665525, 7.213180,
-      43.665083, 7.213336,
-      43.665177, 7.213820,
-      43.665602, 7.213624
-    ]);
-    // ZONE 8
-    this.constructPointsForZone([
-      43.665083, 7.213336,
-      43.664828, 7.213415,
-      43.664905, 7.213876,
-      43.665177, 7.213820
-    ]);
-    // ZONE 9
-    this.constructPointsForZone([
-      43.665602, 7.213624,
-      43.665177, 7.213820,
-      43.665558, 7.214584,
-      43.665766, 7.214278
-    ]);
-    // ZONE 10
-    this.constructPointsForZone([
-      43.665177, 7.213820,
-      43.664905, 7.213876,
-      43.665409, 7.214890,
-      43.665558, 7.214584
-    ]);
-    // ZONE 11
-    this.constructPointsForZone([
-      43.664650, 7.212058,
-      43.664453, 7.212074,
-      43.664542, 7.212965,
-      43.664753, 7.212892
-    ]);
-    // ZONE 12
-    this.constructPointsForZone([
-      43.664753, 7.212892,
-      43.664542, 7.212965,
-      43.664608, 7.213440,
-      43.664828, 7.213415
-    ]);
-    // ZONE 13
-    this.constructPointsForZone([
-      43.664828, 7.213415,
-      43.664608, 7.213440,
-      43.664662, 7.213936,
-      43.664905, 7.213876
-    ]);
-    // ZONE 14
-    this.constructPointsForZone([
-      43.664905, 7.213876,
-      43.664662, 7.213936,
-      43.664725, 7.214536,
-      43.664972, 7.214432
-    ]);
+    this.subscriptions.push(
+      this.httpRequestService.getZones().subscribe((zones) => {
+        zones.forEach((zone) => {
+          const sortedAps = zone.APs.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+          const points = sortedAps.reduce<number[]>((acc, ap) => {
+            acc.push(ap.latitude, ap.longitude);
+            return acc;
+          }, []);
+          this.constructPointsForZone(points);
+        });
+      })
+    );
   }
 
   /*
@@ -242,7 +156,7 @@ export class AirportMapComponent implements AfterViewInit, OnInit, OnDestroy {
   getClientActive(event): void {
     const client: Client = event.value;
     this.subscriptions.push(
-      this.displayClientService.getClientPos(client).subscribe((numberZone) =>
+      this.httpRequestService.getClientPos(client).subscribe((numberZone) =>
         this.setActiveForm(numberZone, client.firstName + client.lastName)
       ));
   }

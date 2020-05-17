@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy": "ng build --prod && scp -i C:/Users/Jeremy/.ssh/iot.pem -r ./dist ubuntu@ec2-54-93-113-62.eu-central-1.compute.amazonaws.com:~/git_clones/Projet_Iot_Ng"
   },
   "private": true,
   "dependencies": {

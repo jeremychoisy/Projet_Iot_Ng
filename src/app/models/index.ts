@@ -1,8 +1,12 @@
+export * from './access-point';
 export * from './chart-data';
 export * from './client';
 export * from './get-fleet-response';
+export * from './get-ping-response';
 export * from './get-pos-response';
 export * from './get-statistics-response';
+export * from './get-zones-response';
 export * from './map-forms';
+export * from './ping';
 export * from './position';
-
+export * from './zone';
