@@ -1,7 +1,7 @@
-import {Component, AfterViewInit, ViewChild, ElementRef, OnInit, OnDestroy, Input} from '@angular/core';
+import {Component, AfterViewInit, ViewChild, ElementRef, OnInit, OnDestroy} from '@angular/core';
 import {Point} from '../models/map-forms';
 import LatLng = google.maps.LatLng;
-import {Observable} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {Client} from '../models';
 import {HttpRequestService} from '../services';
 
@@ -10,31 +10,28 @@ import {HttpRequestService} from '../services';
   templateUrl: './airport-map.component.html',
   styleUrls: ['./airport-map.component.css']
 })
-export class AirportMapComponent implements AfterViewInit, OnInit {
+export class AirportMapComponent implements AfterViewInit, OnInit, OnDestroy {
 
   @ViewChild('mapContainer', {static: false}) gmap: ElementRef;
   map: google.maps.Map;
-  lat = 43.6650847;
-  lng = 7.2130578;
-  i = 0;
-  colors = ['#FDCFC6', '#CCFDC6', '#FDEBC6', '#EAFDC6', '#F7C6FD', '#C6FDE4', '#C6F6FD', '#C6E5FD', '#CAC6FD', '#FDF9C6', '#FDC6E7', '#D8D4D6', '#C68CFF', '#FFC48C'];
-  zones = [];
-  marker;
 
-
-  public clientList$: Observable<Client[]>;
-
-
-  constructor(private displayClientService: HttpRequestService) {
-  }
-
-  coordinates = new google.maps.LatLng(this.lat, this.lng);
-
+  coordinates = new google.maps.LatLng(43.6650847, 7.2130578);
   mapOptions: google.maps.MapOptions = {
     center: this.coordinates,
     zoom: 19,
     draggable: false
   };
+  i = 0;
+  colors = ['#FDCFC6', '#CCFDC6', '#FDEBC6', '#EAFDC6', '#F7C6FD', '#C6FDE4', '#C6F6FD', '#C6E5FD', '#CAC6FD', '#FDF9C6', '#FDC6E7', '#D8D4D6', '#C68CFF', '#FFC48C'];
+  zones = [];
+  marker;
+  private subscriptions: Subscription[] = [];
+
+
+  public clientList$: Observable<Client[]>;
+
+  constructor(private displayClientService: HttpRequestService) {
+  }
 
   ngOnInit(): void {
     this.clientList$ = this.displayClientService.getAllClient();
@@ -44,6 +41,11 @@ export class AirportMapComponent implements AfterViewInit, OnInit {
     this.mapInitializer();
     this.setActiveForm(3, 'Jhon Cena');
   }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
   mapInitializer() {
     this.map = new google.maps.Map(this.gmap.nativeElement,
       this.mapOptions);
@@ -206,10 +208,11 @@ export class AirportMapComponent implements AfterViewInit, OnInit {
   }
 
   getClientActive(event): void {
-    console.log(event);
     const client: Client = event.value;
-    console.log(client._id);
-    this.setActiveForm(Math.floor(Math.random() * 5), client.firstName + client.lastName);
+    this.subscriptions.push(
+      this.displayClientService.getClientPos(client).subscribe((numberZone) =>
+        this.setActiveForm(numberZone, client.firstName + client.lastName))
+    );
   }
 
 }

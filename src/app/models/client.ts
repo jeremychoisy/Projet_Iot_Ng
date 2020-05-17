@@ -4,4 +4,6 @@ export interface Client {
   lastName: string;
   macAddress: string;
   flightNumber: string;
+  pingStatus: string;
 }
+
