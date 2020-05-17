@@ -1,27 +1,47 @@
-# ProjetIotApp
+# AirportConnect
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.5.
+[![N|Solid](https://image.flaticon.com/icons/svg/2086/2086826.svg)](https://nodesource.com/products/nsolid)
 
-## Development server
+AirportConnect est une application permettant d'intérargir avec les différents voyageurs du terminal 1 situé à Nice.
+Voici l'adresse →  http://54.93.113.62:3000/client-page
+Elle à été élaboré dans le cadre d'un projet universitaire pour le Master en Méthode Informatique Appliquée A la Gestion d'Entreprise et plus précisemment pour la matière Internet of things ou internet des objets en français.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Résumé
+Un simple appareil connecté leur sera attribué lors de leurs check-in. Cet appareil aura plusieurs fonctionnalités.
+Voici les différentes fonctionnalités de notre appareil et de l'application qui permet de gérer les différents voyageurs.
 
-## Code scaffolding
+# Fonctionnalités 
+- ###  Application 
+   * Ajouter un utilisateur 
+   * Accéder à tout les utilisateurs inscrit
+   * Supprimer un utilisateur
+   * Envoyez des instructions à l'appareil d'un client
+   * Recevoir des notifications de l'appareil
+   * Voir la dernière position d'un client selon des zones définis
+   * Découper des zones précises 
+   * Afficher des statistiques
+   
+- ### Appareil
+    * Envoyer une notification
+    * Envoyer sa position 
+    * Allumer des capteurs 
+    * Ecouter les instructions 
+    * Envoyer des instructions
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# Fonctionnalités futures 
+- Ajout de statisques (temps passé en moyenne par zone)
+- Amélioration de l'appareil afin de pouvoir y installer un écran 
+- Permettre à l'administrateur de déssiner et ajouter directement lui même une zone 
+- Voir le chemin parcourut par un client ainsi que le temps nécessaire 
+- Voir le nombre de voyageurs n'ayant pas été à l'heure devant la porte d'embarquement correspodante
 
-## Build
+# Difficultés rencontrés 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+- La limitation du matériel, on aurait aimé pouvoir faire plus avec plus de dispositif. Actuellement on est limité à quatres combinaisons
+- Le contexte actuel qui nous empêche de faire des test en extérieurs
+- André à débuté avec l'angular pour ce projet ce qui à rendu la tâche plus compliqué pour lui ainsi que pour Jeremy qui à passé beaucoup de temps à l'aidé.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Lancer l'application en local
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Lancer `ng serve` pour lancer le serveur sur Localhost. Voici l'adresse exact `http://localhost:4200/`. L'application sera automatiquement chargé lors de changement effectués dans les fichiers.
