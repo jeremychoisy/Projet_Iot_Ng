@@ -1,4 +1,8 @@
-agm-map {
+#map {
   height: 40rem;
   width: 90rem;
+}
+
+.dropdown{
+  position:relative;
 }

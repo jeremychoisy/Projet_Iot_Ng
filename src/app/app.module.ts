@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
-import {AgmCoreModule} from '@agm/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app.routing.module';
@@ -13,6 +12,9 @@ import {DisplayClientComponent} from './display-client/display-client.component'
 import {AirportMapComponent} from './airport-map/airport-map.component';
 import {ChartComponent} from './chart/chart.component';
 import {ChartsModule} from 'ng2-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatOptionModule} from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -30,10 +32,10 @@ import {ChartsModule} from 'ng2-charts';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCyZlvP6hBkWH7AKttIegLBdXWSmxO06Ag'
-    }),
-    ChartsModule
+    ChartsModule,
+    BrowserAnimationsModule,
+    MatOptionModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

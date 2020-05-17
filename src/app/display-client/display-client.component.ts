@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Client} from '../models/index';
+import {Client} from '../models';
 import {Observable, Subject, Subscription} from 'rxjs';
-import {HttpRequestService} from '../services/index';
+import {HttpRequestService} from '../services';
 
 @Component({
   selector: 'app-display-client',

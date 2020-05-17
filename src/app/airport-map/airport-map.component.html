@@ -1,3 +1,11 @@
-<agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lng">
-  <agm-marker  [latitude]="lat" [longitude]="lng"></agm-marker>
-</agm-map>
+<mat-form-field *ngIf="clientList$ | async as clientList">
+  <mat-label>Changer de clients</mat-label>
+  <mat-select [value]="clientList[0]" (selectionChange)="getClientActive($event)">
+    <mat-option *ngFor="let client of clientList" [value]="client">
+      {{client.firstName}} {{client.lastName}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div #mapContainer id="map"></div>
+
