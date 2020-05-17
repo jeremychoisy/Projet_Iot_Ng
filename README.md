@@ -46,7 +46,7 @@ Voici les différentes fonctionnalités de notre appareil et de l'application qu
 Lancer `ng serve` pour lancer le serveur sur Localhost. Voici l'adresse exact `http://localhost:4200/`. L'application sera automatiquement chargée lors de changements effectués dans les fichiers.
 
 
-*Fait par trois élèves du Master Miage en TD1 *
+*Fait par trois élèves du Master Miage en TD1*
 **André Da Silva Goncalves**
 **Jeremy Choisy**
 **Maxime Millier**
